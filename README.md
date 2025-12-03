@@ -5,6 +5,7 @@ en un Grafo de Conocimiento y un motor de embeddings (ItôE). Este README unific
 de descarga, instalación del entorno, inicialización de modelos de Hugging Face y ejecución.
 
 **Estructura relevante**
+
 - `main.py`: demo/runner que orquesta NER + motor de inferencia.
 - `src/`: código fuente principal (`inference_engine.py`, `itoe_loader.py`, `itoe_inference.py`, ...).
 - `itoe_metadata.json`: metadata del grafo.
@@ -12,6 +13,7 @@ de descarga, instalación del entorno, inicialización de modelos de Hugging Fac
 - `tests/`: pruebas rápidas (ej. `tests/test_node_extractor.py`).
 
 **Requisitos**
+
 - **Python**: 3.9+ (3.11 probado).
 - **Git**: para clonar el repo.
 - Opcional: `conda` o `virtualenv` para entornos aislados.
@@ -65,7 +67,7 @@ ENV
 **Ejecución en Google Colab — guía paso a paso (rápida y directa)**
 
 Sigue estas celdas exactamente (copiar/pegar en Colab). Estas instrucciones usan como ejemplo
-el repositorio público `https://github.com/a10ns0/SalmonMetric` y el subdirectorio
+el repositorio público https://github.com/ernestoelo/Medical_Diagnosis.git y el subdirectorio
 `Python/Medical_Diagnosis_Assistant`.
 
 1) Crear notebook y activar Drive (recomendado)
@@ -83,7 +85,7 @@ drive.mount('/content/drive')
 
 ```bash
 # 2. Clonar repo (reemplaza si tu repo es otro)
-git clone https://github.com/a10ns0/SalmonMetric.git repo
+git clone https://github.com/ernestoelo/Medical_Diagnosis.git repo
 cd repo/Python/Medical_Diagnosis_Assistant
 ls -la
 ```
@@ -142,14 +144,15 @@ PYTHONPATH=. python main.py
 ```
 
 Notas importantes
+
 - Activa GPU en Colab: `Runtime -> Change runtime type -> GPU` para acelerar inferencia.
 - Usa Drive para almacenar modelos grandes y evitar volver a descargarlos.
 - No pegues tokens en celdas que guardes públicamente; usa `huggingface_hub.login()`.
 
 Problemas comunes
+
 - Si `torch` da errores: instala la rueda compatible con la versión CUDA del runtime de Colab.
 - Si las descargas tardan mucho, guarda los modelos en Drive y usa `snapshot_download(..., cache_dir=...)`.
-
 
 **Inicializar / descargar un modelo desde Hugging Face**
 
@@ -204,19 +207,23 @@ Revisa `main.py` para ver parámetros disponibles; suele respetar variables de e
 `HUGGINGFACE_MODEL`, `HUGGINGFACE_API_TOKEN` y flags para forzar uso local (`USE_LOCAL_ITOE`).
 
 **Notas y recomendaciones**
+
 - **Ficheros importantes**: `src/itoe_loader.py` (carga y conversión), `src/itoe_inference.py` (modelo), `main.py` (entrypoint).
 - **Privacidad**: no comites tokens; usa `.env` o variables de entorno y añade `.env` a `.gitignore`.
 - **Rendimiento**: para inferencia intensiva usa GPU (instala la rueda de `torch` con CUDA adecuada).
 
 **Solución de problemas**
+
 - Error de importación `torch`: instala la versión de PyTorch adecuada para tu sistema/CUDA.
 - Descargas lentas: la primera ejecución descarga pesos de Transformers y puede tardar varios minutos.
 - Fallo al cargar ItôE: revisa `src/itoe_loader.py` y los logs; puede requerir adaptar la conversión si el artefacto es propietario.
 
 **Contacto / contribuciones**
 Si quieres, puedo:
+
 - Añadir un script `scripts/download_model.sh` para automatizar la descarga de modelos HF.
 - Crear una GitHub Action que ejecute las pruebas básicas en push.
 
 ---
+
 Disclaimer: este software es experimental y no debe usarse como sustituto de consejo médico.
